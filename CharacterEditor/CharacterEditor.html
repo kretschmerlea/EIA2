@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <title>Character Editor</title>
+</head>
+
+<body>
+    <header>
+        <h1>Character Editor</h1>
+        <h2>Create your own character.</h3>
+    </header>
+
+    <form id="form">
+        <div>
+
+            <fieldset id="Character">
+                <legend>Your Character</legend>
+                    <h2>Choose your name</h2>
+                        <input type="text" placeholder="Choose your name.">
+                    <h2>Gender</h2>
+                        <input type="radio" name="Gender" value="Male" id="Male" />
+                            <label for="Male">Male</label>
+                        <input type="radio" name="Gender" value="Female" id="Female" />
+                            <label for="Female">Female</label>
+                        <input type="radio" name="Gender" value="Divers" id="Divers" />
+                            <label for="Divers">Divers</label>
+                    <h2>Type of creature</h2>
+                        <select
+                            name="Creature" id="creature">
+			                    <option value="Ork">Ork</option>
+			                    <option value="Gnom" selected>Gnom</option>
+			                    <option value="Giant">Giant</option>
+			                    <option value="Fairy">Fairy</option>
+                        </select>
+                    <h2>Class</h2>
+                        <select     
+                            name="Class" id="class">
+                                <option value="Magician">Magician</option>
+                                <option value="Witch" selected>Witch</option>
+                                <option value="Warrior">Warrior</option>
+                                <option value="Coward">Coward</option>            
+                        </select>
+                    <h2>Eye Color</h2>
+                        <input type="color" name="Eye Color"  id="eye color" placeholder="brown" value="#3B170B">
+                    <h2>Hair Color</h2>
+                        <input type="color" name="Hair Color"  id="eye color" placeholder="blonde" value="#FE9A2E">
+                    <span>
+                        <h2>Weight</h2>
+                        30kg
+                        <input type="range" name="Weight" min="30kg" max="150kg" step="5" value="30kg" />
+                        150kg
+                        <h2>Height</h2>
+                        1.0m
+                        <input type="range" name="Height" min="1.0m" max="2.0m" step="0.1" value="1.0" />
+                        2.0m
+                    </span>
+                    <h2>Date of Birth</h2>
+                        <input type="date" name="Date of Birth">
+                    <h2>Place of Residence</h2>
+                        <select
+                            name="Place of Residence" id="residence">
+			                    <option value="Forest">Forest</option>
+			                    <option value="Castle" selected>Castle</option>
+			                    <option value="In the mountains">In theb mountains</option>
+			                    <option value="Cave">Cave</option>
+                        </select>
+                    <h2>Characteristics</h2>
+                    <select
+                            name="Characteristics" id="characteristics">
+                            <optgroup label="Strength"></optgroup>
+                            <option value="option#1">Weak</option>
+                            <option value="option#2" selected>Strong</option>
+                            <optgroup label="Temper"></optgroup>
+                            <option value="option#3">Aggressive</option>
+                            <option value="option#4">Shy</option>
+                        </select>
+                    <h2>Backstory</h2>
+                        <textarea name="Backstory" rows="5" placeholder="Tell us your story"></textarea>
+                    <h2>Hobby</h2>
+                        <input type="radio" name="Hobby#1" value="Swimming" id="swimming" />
+                            <label for="Hobby#1">Swimming</label>
+                        <input type="radio" name="Hobby#2" value="Roller Skating" id="roller skating" />
+                            <label for="Hobby#2">Roller Skating</label>
+                        <input type="radio" name="Hobby#3" value="Dancing" id="dancing" />
+                            <label for="Hobby#3">Dancing</label>
+                        <input type="radio" name="Hobby#4" value="Soccer" id="soccer" />
+                            <label for="Hobby#4">Soccer</label>
+            </fieldset>
+            <fieldset id="Gear">
+                <label>Choose your clothes and gear!</label>
+                    <h2>Color of Clothes</h2>
+                        <h3>Shirt</h3>
+                            <input type="color" name="Shirt"  id="shirt" placeholder="brown" value="#3B170B">
+                        <h3>Pants</h3>
+                            <input type="color" name="Pants"  id="pants" placeholder="brown" value="#3B170B">
+                        <h3>Shoes</h3>
+                            <input type="color" name="Shoes"  id="shoes" placeholder="black" value="#ffffff">
+                        <h3>Coat</h3>
+                            <input type="color" name="Coat"  id="coat" placeholder="red" value="#ff0000">
+                    <h2>Choose your Weapon(s)</h2>
+                            <input type="radio" name="Choice#1" value="Singlehanded" id="singelehanded" />
+                            <label for="Choice#1">Singlehanded</label>
+                            <input type="radio" name="Choice#2" value="Doublehanded" id="doublehanded" />
+                            <label for="Choice#2">Doublehanded</label>
+                    <h2>Choose your Accessoires</h2>
+                        <legend> Checkbox Group </legend>
+		                    <input type="checkbox" name="Hats" value="hats" id="hats" />
+		                        <label for="hats">Hats</label>
+		                    <input type="checkbox" name="Belts" value="belts" id="belts" />
+		                    <label for="belts">Belts</label>
+            </fieldset>
+        </div>
+        <div>
+            <h2>Your Character</h2>
+            <div id="character">
+                <div></div>
+            </div>
+            <button type="reset" form="form">Reset</button>
+            <button type="button" form="form">Submit Character</button>
+        </div>
+    </form>
+</body>
+
+</html>
