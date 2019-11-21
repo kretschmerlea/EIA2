@@ -1,32 +1,43 @@
-"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var L06_CocktailBar;
 (function (L06_CocktailBar) {
     window.addEventListener("load", handleLoad);
     let form;
     // let url: string = "index.html";
-    let url = "http://localhost:5001";
-    async function handleLoad(_event) {
-        console.log("Init");
-        let response = await fetch("Data.json");
-        let offer = await response.text();
-        let data = JSON.parse(offer);
-        L06_CocktailBar.generateContent(data);
-        form = document.querySelector("form");
-        let slider = document.querySelector("input#amount");
-        let submit = document.querySelector("button[type=button]");
-        console.log(submit);
-        form.addEventListener("change", handleChange);
-        slider.addEventListener("input", displayAmount);
-        submit.addEventListener("click", sendOrder);
-        displayOrder();
+    let url = "https://neueapp.herokuapp.com/";
+    function handleLoad(_event) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("Init");
+            let response = yield fetch("Data.json");
+            let offer = yield response.text();
+            let data = JSON.parse(offer);
+            L06_CocktailBar.generateContent(data);
+            form = document.querySelector("form");
+            let slider = document.querySelector("input#amount");
+            let submit = document.querySelector("button[type=button]");
+            console.log(submit);
+            form.addEventListener("change", handleChange);
+            slider.addEventListener("input", displayAmount);
+            submit.addEventListener("click", sendOrder);
+            displayOrder();
+        });
     }
-    async function sendOrder(_event) {
-        console.log("Send order");
-        let formData = new FormData(form);
-        let query = new URLSearchParams(formData);
-        let response = await fetch(url + "?" + query.toString());
-        let responseText = await response.text();
-        alert(responseText);
+    function sendOrder(_event) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("Send order");
+            let formData = new FormData(form);
+            let query = new URLSearchParams(formData);
+            let response = yield fetch(url + "?" + query.toString());
+            let responseText = yield response.text();
+            alert(responseText);
+        });
     }
     function handleChange(_event) {
         displayOrder();

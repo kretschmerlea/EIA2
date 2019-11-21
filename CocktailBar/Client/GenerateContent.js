@@ -1,4 +1,3 @@
-"use strict";
 var L06_CocktailBar;
 (function (L06_CocktailBar) {
     function generateContent(_data) {
