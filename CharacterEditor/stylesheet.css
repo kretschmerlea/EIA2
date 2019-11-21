@@ -17,15 +17,13 @@ div {
     margin: 1em;
     float: left;
     }
-#Character{
+#Gear {
     float: left;
 }
-#Gear{
-    float: left;
-}
-#character{
-    float: left;
-}
+
+
+main>div:nth-child(0+2n+1) {clear:left}
+
 h2 {
     text-align: center;
     }
