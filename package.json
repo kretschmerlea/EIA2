@@ -1,0 +1,23 @@
+{
+  "name": "neueapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "typescript-tslint-plugin": "^0.5.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node CocktailBar/Server/Server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kretschmerlea/EIA2.git"
+  },
+  "author": "Lea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kretschmerlea/EIA2/issues"
+  },
+  "homepage": "https://github.com/kretschmerlea/EIA2#readme"
+}
