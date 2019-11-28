@@ -4,9 +4,9 @@ namespace L05_CharacterEditor {
     async function handleLoad(_event: Event): Promise<void> {
         console.log("Init");
         
-        let response: Response = await fetch("Data.json");
+        let response: Response = await fetch("./CharacterEditor.json");
         let editor: string = await response.text();
-        let data = JSON.parse(editor);
+        let data: Data = JSON.parse(editor);
         
         generateContent(data);
 
@@ -33,38 +33,30 @@ namespace L05_CharacterEditor {
     }
 
     function displayCharacter(): void {
-        // let inputs: NodeListOf<HTMLInputElement> = document.querySelectorAll("input");
-        // console.log(inputs);
-        let price: number = 0;
+        let inputs: NodeListOf<HTMLInputElement> = document.querySelectorAll("input");
+        console.log(inputs);
+    
         let character: HTMLDivElement = <HTMLDivElement>document.querySelector("div#character");
         character.innerHTML = "";
 
         let formData: FormData = new FormData(<HTMLFormElement>document.querySelector("form"));
-
-        // console.group("Order");
-        for (let entry of formData) {
-            // console.log(entry);
-            let selector: string = "[value='" + entry[1] + "']"; // "[name='" + entry[0] + "'][value='" + entry[1] + "']";
-            let item: HTMLInputElement = <HTMLInputElement>document.querySelector(selector);
-            let itemPrice: number = Number(item.getAttribute("price"));
-            switch (entry[0]) {
-                case "Amount":
-                    break;
-                case "Drink":
-                    let amount: number = Number(formData.get("Amount"));
-                    itemPrice = amount * itemPrice;
-                    order.innerHTML += amount + " L " + item.value + ": €" + itemPrice + "<br>";
-                    break;
-                default:
-                    order.innerHTML += item.value + ": €" + itemPrice.toFixed(2) + "<br>";
-            }
-            // console.log(item);
-            price += itemPrice;
-        }
-        // console.groupEnd();
+        let name: HTMLInputElement = <HTMLInputElement>document.querySelector("input#name");
+        character.innerHTML += "Name: " + name.value + "<br>";
         
-        order.innerHTML += "<p><strong>Total: €" + price.toFixed(2);
-    
+        let genders: NodeListOf<HTMLInputElement> = document.querySelectorAll("input[name=Gender]");
+        for (let i: number = 0; i < genders.length; i++) {
+            console.log(genders[i]);
+            if (genders[i].checked) 
+                character.innerHTML += "Gender: " + genders[i].value + "<br>";
+        }
+
+        let creature: HTMLInputElement = <HTMLInputElement>document.querySelector("input#creature");
+        character.innerHTML += "Type of Creature: " + creature.value + "<br>";
+        let klasse: HTMLInputElement = <HTMLInputElement>document.querySelector("input#class");
+        character.innerHTML += "Type of Class: " + name.value + "<br>";
+
+        
+
     }
     interface Data {
         [category: string]: Category[];

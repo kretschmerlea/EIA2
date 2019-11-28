@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script src="GenerateContent.js" type="text/javascript" charset="utf-8"></script>
+	<script src="CharacterEditor.js" type="text/javascript" charset="utf-8"></script>
     <title>Character Editor</title>
 </head>
 
@@ -21,7 +23,7 @@
             <fieldset id="Character">
                 <legend>Your Character</legend>
                     <h2>Choose your name</h2>
-                        <input type="text" placeholder="Choose your name.">
+                        <input type="text" id="name" placeholder="Choose your name.">
                     <h2>Gender</h2>
                         <input type="radio" name="Gender" value="Male" id="Male" />
                             <label for="Male">Male</label>
@@ -37,7 +39,7 @@
 			                    <option value="Giant">Giant</option>
 			                    <option value="Fairy">Fairy</option>
                         </select>
-                    <h2>Class</h2>
+                    <h2>Type of Class</h2>
                         <select     
                             name="Class" id="class">
                                 <option value="Magician">Magician</option>

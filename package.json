@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/mongodb": "^3.3.11",
+    "mongodb": "^3.3.5",
     "typescript-tslint-plugin": "^0.5.4"
   },
   "devDependencies": {},
