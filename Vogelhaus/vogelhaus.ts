@@ -1,12 +1,15 @@
 namespace Vogelhaus {
-    interface Vector {
-        x: number;
-        y: number;
-    }
+    // interface Vector {
+    //     x: number;
+    //     y: number;
+    // }
 
     window.addEventListener("load", handleLoad);
-    let crc2: CanvasRenderingContext2D;
+    export let crc2: CanvasRenderingContext2D;
     let golden: number = 0.62;
+    let arrayBirds: Birds[] = [];
+    let arraySnowflakes: Snowflakes[] = [];
+    let saveBackground: ImageData;
 
     function handleLoad(_event: Event): void {
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
@@ -17,16 +20,19 @@ namespace Vogelhaus {
         let horizon: number = crc2.canvas.height * golden;
 
         drawBackground();
-        drawSun({ x: 150, y: 100 });
-        drawCloud({ x: 350, y: 125 }, { x: 200, y: 75 });
-        drawCloudKlein({ x: 550, y: 150 }, { x: 100, y: 50 });
-        drawMountains({ x: 0, y: horizon }, 75, 200, "grey", "white");
-        drawMountains({ x: 0, y: horizon }, 50, 150, "grey", "lightgrey");
-        drawSnowman({ x: 100, y: 625 });
-        drawBirdhouse({ x: 400, y: 450 });
-        drawTrees({ x: 700, y: 600 }, { x: 200, y: 250 });
-        drawBirds( { x: 800, y: 400});
-        
+        drawSun(new Vector(150, 100));
+        drawCloud(new Vector(350, 125), new Vector(200, 75));
+        drawCloudKlein(new Vector(550, 150), new Vector(100, 50));
+        drawMountains(new Vector(0, horizon), 75, 200, "grey", "white");
+        drawMountains(new Vector(0, horizon), 50, 150, "grey", "lightgrey");
+        drawSnowman(new Vector(100, 625));
+        drawBirdhouse(new Vector(400, 450));
+        drawTrees(new Vector(700, 600), new Vector(200, 250));
+        saveBackground = crc2.getImageData(0, 0, 800, 600);
+        drawBirds(new Vector(800, 400));
+        drawSnowflakes(new Vector(800, 600));
+        updateCanvas();
+
     }
 
     function drawBackground(): void {
@@ -232,7 +238,7 @@ namespace Vogelhaus {
         let nTrees: number = 4;
         let colorTrunk: string = "#61210B";
         let colorCrown: string = "green";
-        let scale: number;
+        //let scale: number;
 
 
         crc2.save();
@@ -242,7 +248,7 @@ namespace Vogelhaus {
             crc2.save();
             let x: number = (Math.random() - 0.5) * _size.x;
             let y: number = - (Math.random() * _size.y);
-            
+
 
             crc2.fillStyle = colorTrunk;
             crc2.fillRect(x, y, 20, 30);
@@ -253,7 +259,7 @@ namespace Vogelhaus {
             crc2.lineTo(x - 20, y);
             crc2.lineTo(x + 10, y - 60);
             crc2.closePath();
-            
+
             crc2.fill();
 
             crc2.restore();
@@ -261,32 +267,71 @@ namespace Vogelhaus {
         }
         crc2.restore();
     }
-    function drawBirds( _size: Vector): void {
-        console.log("Birds") ;
+
+    function updateCanvas(): void {
+        setTimeout(updateCanvas, 1000 / 30);
+        crc2.clearRect(0, 0, 800, 600);
+        crc2.putImageData(saveBackground, 0, 0);
+        for (let i: number = 0; i < arrayBirds.length; i++) {
+            arrayBirds[i].move();
+            arrayBirds[i].draw();
+        }
+        for (let i: number = 0; i < arraySnowflakes.length; i++) {
+            arraySnowflakes[i].move();
+            arraySnowflakes[i].draw();
+        }
+
+    }
+    function drawBirds(_size: Vector): void {
+        console.log("Birds");
 
         let nBirds: number = 15;
-        let radiusBird: number = 20;
-        let bird: Path2D = new Path2D();
-        let colorBird: string = "pink";
-        
+        //let radiusBird: number = 20;
+        //let bird: Path2D = new Path2D();
+        //let colorBird: string[] = ["pink", "red", "yellow"];
 
-        bird.arc(0, 0, radiusBird, 0, 2 * Math.PI);
-        bird.arc(15, 15, 25, 0, 1.5 * Math.PI);
-            
-        crc2.fill();
-        
+
+        // bird.arc(0, 0, radiusBird, 0, 2 * Math.PI);
+        // bird.arc(15, 15, 25, 0, 1.5 * Math.PI);
+
+        // crc2.fill();
+
         crc2.save();
-        crc2.fillStyle = colorBird;
+
 
         for (let drawn: number = 0; drawn < nBirds; drawn++) {
-            crc2.save();
+            let draw: Birds = new Birds(_size);
+            arrayBirds.push(draw);
+            /*crc2.save();
             let x: number = (Math.random() * _size.x);
             let y: number = (Math.random() * _size.y);
             crc2.translate(x, y);
+            let birdColor: number = -0.4 + Math.random() * 2.8;
+            birdColor = Number(birdColor.toFixed(0));
+            console.log(birdColor);
+            // crc2.fillStyle = colorBird[1];
+            crc2.fillStyle = colorBird[birdColor];
             crc2.fill(bird);
-            crc2.restore();
+            crc2.restore();*/
         }
         crc2.restore();
     }
-    
+
+    function drawSnowflakes(_size: Vector): void {
+        console.log("Snowflakes");
+
+        let nSnowflakes: number = 100;
+        crc2.save();
+
+
+        for (let drawn: number = 0; drawn < nSnowflakes; drawn++) {
+            let draw: Snowflakes = new Snowflakes(_size);
+
+            arraySnowflakes.push(draw);
+
+        }
+        crc2.restore();
+    }
+
 }
+
