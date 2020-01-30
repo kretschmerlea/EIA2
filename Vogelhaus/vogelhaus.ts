@@ -27,7 +27,7 @@ namespace Vogelhaus {
         drawMountains(new Vector(0, horizon), 50, 150, "grey", "lightgrey");
         drawSnowman(new Vector(100, 625));
         drawBirdhouse(new Vector(400, 450));
-        drawTrees(new Vector(700, 600), new Vector(200, 250));
+        drawTrees(new Vector(700, 600), new Vector(200, 200));
         saveBackground = crc2.getImageData(0, 0, 800, 600);
         drawBirds(new Vector(800, 400));
         drawSnowflakes(new Vector(800, 600));
@@ -238,7 +238,6 @@ namespace Vogelhaus {
         let nTrees: number = 4;
         let colorTrunk: string = "#61210B";
         let colorCrown: string = "green";
-        //let scale: number;
 
 
         crc2.save();
@@ -248,16 +247,16 @@ namespace Vogelhaus {
             crc2.save();
             let x: number = (Math.random() - 0.5) * _size.x;
             let y: number = - (Math.random() * _size.y);
-
-
+            let scale: number = Math.abs(Math.sin(-30 / y) * 2); // scale of trees
+ 
             crc2.fillStyle = colorTrunk;
-            crc2.fillRect(x, y, 20, 30);
+            crc2.fillRect(x, y, 20 * scale, 30 * scale);
 
             crc2.fillStyle = colorCrown;
             crc2.beginPath();
-            crc2.moveTo(x + 40, y);
-            crc2.lineTo(x - 20, y);
-            crc2.lineTo(x + 10, y - 60);
+            crc2.moveTo(x + 40 * scale, y);
+            crc2.lineTo(x - 20 * scale, y);
+            crc2.lineTo(x + 10 * scale, y - 60 * scale);
             crc2.closePath();
 
             crc2.fill();
