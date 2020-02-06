@@ -9,11 +9,8 @@ var Vogelhaus;
     let arrayBirds = [];
     let arraySnowflakes = [];
     let snowballs = [];
-    let arrayFood = [];
     let saveBackground;
     let timer = 60;
-    let score = 0;
-    let snowballCount = 0;
     function handleLoad(_event) {
         timer = 60;
         let canvas = document.querySelector("canvas");
@@ -35,7 +32,6 @@ var Vogelhaus;
         drawSnowflakes(new Vogelhaus.Vector(800, 600));
         updateCanvas();
         canvas.addEventListener("click", throwSnowball);
-        canvas.addEventListener("auxclick", throwFood);
     }
     function drawBackground() {
         console.log("Background");
@@ -214,85 +210,16 @@ var Vogelhaus;
         Vogelhaus.crc2.restore();
     }
     function updateCanvas() {
-        if (snowballCount < 20) {
-            setTimeout(updateCanvas, 1000 / 30);
-            Vogelhaus.crc2.clearRect(0, 0, 800, 600);
-            Vogelhaus.crc2.putImageData(saveBackground, 0, 0);
-            for (let i = 0; i < arrayBirds.length; i++) {
-                arrayBirds[i].move();
-                arrayBirds[i].draw();
-            }
-            for (let i = 0; i < arraySnowflakes.length; i++) {
-                arraySnowflakes[i].move();
-                arraySnowflakes[i].draw();
-            }
-            for (let i = 0; i < arrayFood.length; i++) {
-                //arrayFood[i].move();
-                arrayFood[i].draw();
-            }
-            for (let i = 0; i < snowballs.length; i++) {
-                if (snowballs[i].timer > 0) {
-                    snowballs[i].draw();
-                }
-                else {
-                    if (snowballs[i].timer == 0) {
-                        snowballs[i].draw();
-                        let hit = false;
-                        for (let birdNumber = 0; birdNumber < arrayBirds.length; birdNumber++) {
-                            //console.log(snowballs.length + arrayBirds.length);
-                            let bird = arrayBirds[birdNumber];
-                            //console.log("x: " + bird.x + "y: " + bird.y);
-                            if (snowballs[i].checkIfHit(bird)) {
-                                hit = true;
-                                bird.state = Vogelhaus.State.DEAD;
-                                score += 10;
-                                console.log("score:" + score);
-                                arrayBirds.splice(birdNumber, 1);
-                            }
-                        }
-                        // wenn kein Vogel getroffen ein Punkt abzug
-                        if (!hit) {
-                            score--;
-                        }
-                        snowballs.splice(i, 1);
-                        snowballCount++;
-                    }
-                }
-            }
-            Vogelhaus.crc2.fillStyle = "#0f0f0f";
-            Vogelhaus.crc2.fillRect(690, 0, 110, 35);
-            Vogelhaus.crc2.font = "20px Arial";
-            Vogelhaus.crc2.fillStyle = "white";
-            Vogelhaus.crc2.fillText("Score: ", 700, 25);
-            Vogelhaus.crc2.fillText("" + score, 760, 25);
+        setTimeout(updateCanvas, 1000 / 30);
+        Vogelhaus.crc2.clearRect(0, 0, 800, 600);
+        Vogelhaus.crc2.putImageData(saveBackground, 0, 0);
+        for (let i = 0; i < arrayBirds.length; i++) {
+            arrayBirds[i].move();
+            arrayBirds[i].draw();
         }
-        else {
-            if (score >= 0) {
-                endScreen(true);
-            }
-            else {
-                endScreen(false);
-            }
-        }
-    }
-    function endScreen(winner) {
-        if (winner) {
-            Vogelhaus.crc2.fillStyle = "#4C0B5F";
-            Vogelhaus.crc2.fillRect(250, 225, 300, 150);
-            Vogelhaus.crc2.font = "20px Arial";
-            Vogelhaus.crc2.fillStyle = "white";
-            Vogelhaus.crc2.fillText("Game over", 350, 250);
-            Vogelhaus.crc2.font = "30px Arial";
-            Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 270, 300);
-        }
-        else {
-            Vogelhaus.crc2.fillStyle = "#4C0B5F";
-            Vogelhaus.crc2.fillRect(250, 225, 300, 150);
-            Vogelhaus.crc2.font = "20px Arial";
-            Vogelhaus.crc2.fillStyle = "white";
-            Vogelhaus.crc2.fillText("Game over", 350, 250);
-            Vogelhaus.crc2.font = "30px Arial";
-            Vogelhaus.crc2.fillText("You lose!", 340, 300);
+        for (let i = 0; i < arraySnowflakes.length; i++) {
+            arraySnowflakes[i].move();
+            arraySnowflakes[i].draw();
         }
     }
     function drawBirds(_size) {
@@ -342,14 +269,27 @@ var Vogelhaus;
         ball.timer = 25;
         snowballs.push(ball);
     }
-    function throwFood(_event) {
-        let x = _event.clientX;
-        let y = _event.clientY;
-        let food = new Vogelhaus.Food(x, y);
-        food.x = x;
-        food.y = y;
-        food.timer = 25;
-        arrayFood.push(food);
+    /*if (snowballs.length > 25) {
+        console.log("Spiel Ende");
+        showEndscreen()
+    }*/
+    for (let i = 0; i < snowballs.length; i++) {
+        if (snowballs[i].timer > 0) {
+            snowballs[i].draw();
+        }
+        /*else {
+            if (snowballs[i].timer == 0) {
+                snowballs[i].draw();
+                for (let i2: number = 0; i2 < arrayBird.length; i2++) {
+                    console.log(snowballs.length + ChildDown.length);
+                    if (snowballs[i].checkIfHit(childsDown[i2].x, childsDown[i2].y) == true && childsDown[i2].state == "ridedown") {
+                        childsDown[i2].state = "dead";
+                        score += childsDown[i2].getSpeed();
+                        console.log("score:" + score);
+                    }
+                }
+            }
+        }*/
     }
 })(Vogelhaus || (Vogelhaus = {}));
 //# sourceMappingURL=vogelhaus.js.map

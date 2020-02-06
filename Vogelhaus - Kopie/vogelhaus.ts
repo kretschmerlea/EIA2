@@ -10,12 +10,8 @@ namespace Vogelhaus {
     let arrayBirds: Birds[] = [];
     let arraySnowflakes: Snowflakes[] = [];
     let snowballs: Snowball[] = [];
-    let arrayFood: Food[] = [];
     let saveBackground: ImageData;
     let timer: number = 60;
-
-    let score: number = 0;
-    let snowballCount: number = 0;
 
     function handleLoad(_event: Event): void {
         timer = 60;
@@ -40,7 +36,6 @@ namespace Vogelhaus {
         drawSnowflakes(new Vector(800, 600));
         updateCanvas();
         canvas.addEventListener("click", throwSnowball);
-        canvas.addEventListener("auxclick", throwFood);
 
     }
 
@@ -277,92 +272,18 @@ namespace Vogelhaus {
     }
 
     function updateCanvas(): void {
-        if (snowballCount < 20) {
-            setTimeout(updateCanvas, 1000 / 30);
-            crc2.clearRect(0, 0, 800, 600);
-            crc2.putImageData(saveBackground, 0, 0);
-            for (let i: number = 0; i < arrayBirds.length; i++) {
-                arrayBirds[i].move();
-                arrayBirds[i].draw();
-            }
-            for (let i: number = 0; i < arraySnowflakes.length; i++) {
-                arraySnowflakes[i].move();
-                arraySnowflakes[i].draw();
-            }
-            for (let i: number = 0; i < arrayFood.length; i++) {
-                //arrayFood[i].move();
-                arrayFood[i].draw();
-            }
-            for (let i: number = 0; i < snowballs.length; i++) {
-                if (snowballs[i].timer > 0) {
-                    snowballs[i].draw();
-                }
-            
-                else {
-                    if (snowballs[i].timer == 0) {
-                        snowballs[i].draw();
-                        let hit: boolean = false;
-                        for (let birdNumber: number = 0; birdNumber < arrayBirds.length; birdNumber++) {
-                            //console.log(snowballs.length + arrayBirds.length);
-                            let bird: Birds = arrayBirds[birdNumber];
-                            //console.log("x: " + bird.x + "y: " + bird.y);
-                            if (snowballs[i].checkIfHit(bird)) {
-                                hit = true;
-                                bird.state = State.DEAD;
-                                score += 10;
-                                console.log("score:" + score);
-                                arrayBirds.splice(birdNumber, 1);
-                            }
-                        }
-                        // wenn kein Vogel getroffen ein Punkt abzug
-                        if (!hit) {
-                            score--;
-                        }
-
-                        snowballs.splice(i, 1);
-                        snowballCount ++;
-                    }
-                }
-            }
-
-            crc2.fillStyle = "#0f0f0f";
-            crc2.fillRect(690, 0, 110, 35);
-            crc2.font = "20px Arial";
-            crc2.fillStyle = "white";
-            crc2.fillText("Score: ", 700, 25);
-
-            crc2.fillText("" + score, 760, 25);
-
-        } else {
-            if (score >= 0) {
-                endScreen(true);
-                
-            }
-            else {
-                endScreen(false);
-            }
+        setTimeout(updateCanvas, 1000 / 30);
+        crc2.clearRect(0, 0, 800, 600);
+        crc2.putImageData(saveBackground, 0, 0);
+        for (let i: number = 0; i < arrayBirds.length; i++) {
+            arrayBirds[i].move();
+            arrayBirds[i].draw();
         }
-    }
-    
-    function endScreen(winner: boolean): void {
-        if (winner) {
-            crc2.fillStyle = "#4C0B5F";
-            crc2.fillRect(250, 225, 300, 150);
-            crc2.font = "20px Arial";
-            crc2.fillStyle = "white";
-            crc2.fillText("Game over", 350, 250);
-            crc2.font = "30px Arial";
-            crc2.fillText("Your Final Score:" + " " + score, 270, 300);
+        for (let i: number = 0; i < arraySnowflakes.length; i++) {
+            arraySnowflakes[i].move();
+            arraySnowflakes[i].draw();
         }
-        else {
-            crc2.fillStyle = "#4C0B5F";
-            crc2.fillRect(250, 225, 300, 150);
-            crc2.font = "20px Arial";
-            crc2.fillStyle = "white";
-            crc2.fillText("Game over", 350, 250);
-            crc2.font = "30px Arial";
-            crc2.fillText("You lose!", 340, 300);
-        }
+
     }
     function drawBirds(_size: Vector): void {
         console.log("Birds");
@@ -415,7 +336,6 @@ namespace Vogelhaus {
         }
         crc2.restore();
     }
-
     function throwSnowball(_event: MouseEvent): void {
         console.log();
         let x: number = _event.clientX;
@@ -427,15 +347,29 @@ namespace Vogelhaus {
         snowballs.push(ball);
     }
 
-    function throwFood(_event: MouseEvent): void {
-        let x: number = _event.clientX;
-        let y: number = _event.clientY;
-        let food: Food = new Food(x, y);
-        food.x = x;
-        food.y = y;
-        food.timer = 25;
-        arrayFood.push(food);
 
+    /*if (snowballs.length > 25) {
+        console.log("Spiel Ende");
+        showEndscreen()
+    }*/
+    for (let i: number = 0; i < snowballs.length; i++) {
+        if (snowballs[i].timer > 0) {
+            snowballs[i].draw();
+
+        }
+
+        /*else {
+            if (snowballs[i].timer == 0) {
+                snowballs[i].draw();
+                for (let i2: number = 0; i2 < arrayBird.length; i2++) {
+                    console.log(snowballs.length + ChildDown.length);
+                    if (snowballs[i].checkIfHit(childsDown[i2].x, childsDown[i2].y) == true && childsDown[i2].state == "ridedown") {
+                        childsDown[i2].state = "dead";
+                        score += childsDown[i2].getSpeed();
+                        console.log("score:" + score);
+                    }
+                }
+            }
+        }*/
     }
-
 }

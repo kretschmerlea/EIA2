@@ -1,18 +1,11 @@
 namespace Vogelhaus {
-    export enum State {
-        DEAD,
-        ALIVE,
-        HIT
-    }
-
     export class Birds extends Moveable {
-        
+
         colorBird: string[] = ["pink", "red", "yellow"];
         bird: Path2D = new Path2D();
         birdColor: number;
         x: number ;
         y: number ;
-        state: State = State.ALIVE;
 
         constructor(_size: Vector) {
             
@@ -30,8 +23,7 @@ namespace Vogelhaus {
 
             this.position = new Vector((Math.random() * _size.x), (Math.random() * _size.y));
             this.velocity = new Vector((Math.random() * -5), (Math.random() * -5 + 2.5));
-            this.x = this.position.x;
-            this.y = this.position.y;
+
             this.birdColor = -0.4 + Math.random() * 2.8;
             this.birdColor = Number(this.birdColor.toFixed(0));
             console.log(this.birdColor);
@@ -43,8 +35,7 @@ namespace Vogelhaus {
             crc2.save();
             
             crc2.translate(this.position.x, this.position.y);
-            this.x = this.position.x;
-            this.y = this.position.y;
+
             crc2.fillStyle = this.colorBird[this.birdColor];
 
             crc2.fill(this.bird);
