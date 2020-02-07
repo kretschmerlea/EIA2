@@ -2,8 +2,11 @@ namespace Vogelhaus {
     export class Food extends Moveable {
         x: number;
         y: number;
+        zeroX: number = 0;
+        zeroY: number = 0;
         color: string;
         timer: number;
+        lifetime: number;
         foodX: number[] = [];
         foodY: number[] = [];
 
@@ -55,6 +58,7 @@ namespace Vogelhaus {
                 crc2.stroke();
                 this.timer--;
                 
+                
                 if (this.timer == 0) {
                     this.foodX = x;
                     this.foodY = y;
@@ -81,6 +85,26 @@ namespace Vogelhaus {
                 crc2.fill();
                 crc2.stroke();
             }
+            this.lifetime--;
+        }
+
+        onPlattform(pathPlattform: Path2D, pathBarrier: Path2D = null): boolean {
+            if (crc2.isPointInPath(pathPlattform, this.x, this.y)) {
+                if (pathBarrier == null) {
+                    return true;
+                }
+                else {
+                    if (crc2.isPointInPath(pathBarrier, this.x, this.y)) {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
+
+        setZeroPoint(zeroPoint: Vector): void {
+            this.zeroX += zeroPoint.x;
+            this.zeroY += zeroPoint.y;
         }
 
         /*checkIfHit(bird: Birds): boolean {

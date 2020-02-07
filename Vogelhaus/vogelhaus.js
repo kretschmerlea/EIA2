@@ -13,8 +13,12 @@ var Vogelhaus;
     let arrayFood = [];
     let saveBackground;
     let timer = 60;
+    let vogelhausPlattform = new Path2D();
+    let vogelhausHaus = new Path2D();
+    let zeroPointVogelhaus;
     let score = 0;
     let snowballCount = 0;
+    let foodCount = 0;
     function handleLoad(_event) {
         timer = 60;
         let canvas = document.querySelector("canvas");
@@ -29,7 +33,8 @@ var Vogelhaus;
         drawMountains(new Vogelhaus.Vector(0, horizon), 75, 200, "grey", "white");
         drawMountains(new Vogelhaus.Vector(0, horizon), 50, 150, "grey", "lightgrey");
         drawSnowman(new Vogelhaus.Vector(100, 625));
-        drawBirdhouse(new Vogelhaus.Vector(400, 450));
+        zeroPointVogelhaus = new Vogelhaus.Vector(400, 450);
+        drawBirdhouse(zeroPointVogelhaus);
         drawTrees(new Vogelhaus.Vector(700, 600), new Vogelhaus.Vector(200, 200));
         saveBackground = Vogelhaus.crc2.getImageData(0, 0, 800, 600);
         drawBirds(new Vogelhaus.Vector(800, 400));
@@ -164,23 +169,21 @@ var Vogelhaus;
         Vogelhaus.crc2.translate(_position.x, _position.y);
         Vogelhaus.crc2.fillStyle = colorHouse;
         Vogelhaus.crc2.fillRect(-25, 0, 50, 175);
-        Vogelhaus.crc2.beginPath();
-        Vogelhaus.crc2.moveTo(-175, 25);
-        Vogelhaus.crc2.lineTo(-125, -50);
-        Vogelhaus.crc2.lineTo(125, -50);
-        Vogelhaus.crc2.lineTo(175, 25);
-        Vogelhaus.crc2.closePath();
+        vogelhausPlattform.moveTo(-175, 25);
+        vogelhausPlattform.lineTo(-125, -50);
+        vogelhausPlattform.lineTo(125, -50);
+        vogelhausPlattform.lineTo(175, 25);
+        vogelhausPlattform.closePath();
         Vogelhaus.crc2.fillStyle = colorPlatform;
-        Vogelhaus.crc2.fill();
-        Vogelhaus.crc2.beginPath();
-        Vogelhaus.crc2.moveTo(-100, 0);
-        Vogelhaus.crc2.lineTo(-100, -150);
-        Vogelhaus.crc2.lineTo(0, -225);
-        Vogelhaus.crc2.lineTo(100, -150);
-        Vogelhaus.crc2.lineTo(100, 0);
-        Vogelhaus.crc2.closePath();
+        Vogelhaus.crc2.fill(vogelhausPlattform);
+        vogelhausHaus.moveTo(-100, 0);
+        vogelhausHaus.lineTo(-100, -150);
+        vogelhausHaus.lineTo(0, -225);
+        vogelhausHaus.lineTo(100, -150);
+        vogelhausHaus.lineTo(100, 0);
+        vogelhausHaus.closePath();
         Vogelhaus.crc2.fillStyle = colorHouse;
-        Vogelhaus.crc2.fill();
+        Vogelhaus.crc2.fill(vogelhausHaus);
         Vogelhaus.crc2.beginPath();
         Vogelhaus.crc2.arc(0, -75, r1, 0, 2 * Math.PI);
         Vogelhaus.crc2.closePath();
@@ -220,6 +223,12 @@ var Vogelhaus;
             Vogelhaus.crc2.clearRect(0, 0, 800, 600);
             Vogelhaus.crc2.putImageData(saveBackground, 0, 0);
             for (let i = 0; i < arrayBirds.length; i++) {
+                for (let i2 = 0; i2 < arrayFood.length; i2++) {
+                    if (arrayBirds[i].foodnearby(arrayFood[i2])) {
+                        arrayBirds[i].changePath(arrayFood[i2]);
+                        arrayBirds[i].state = Vogelhaus.State.FEEDING;
+                    }
+                }
                 arrayBirds[i].move();
                 arrayBirds[i].draw();
             }
@@ -229,7 +238,23 @@ var Vogelhaus;
             }
             for (let i = 0; i < arrayFood.length; i++) {
                 //arrayFood[i].move();
-                arrayFood[i].draw();
+                let food = arrayFood[i];
+                food.setZeroPoint(zeroPointVogelhaus);
+                if ((food.timer == 0 && food.y < 400) || food.lifetime == 0) {
+                    if (food.lifetime == 0) {
+                        for (let birdCount = 0; birdCount < arrayBirds.length; ++birdCount) {
+                            if (arrayBirds[birdCount].state == Vogelhaus.State.FEEDING) {
+                                console.log("test");
+                                arrayBirds[birdCount].resetVelocity();
+                                arrayBirds[birdCount].state = Vogelhaus.State.ALIVE;
+                            }
+                        }
+                    }
+                    arrayFood.splice(i, 1);
+                }
+                else {
+                    food.draw();
+                }
             }
             for (let i = 0; i < snowballs.length; i++) {
                 if (snowballs[i].timer > 0) {
@@ -261,11 +286,20 @@ var Vogelhaus;
                 }
             }
             Vogelhaus.crc2.fillStyle = "#0f0f0f";
-            Vogelhaus.crc2.fillRect(690, 0, 110, 35);
+            Vogelhaus.crc2.fillRect(650, 0, 150, 60);
             Vogelhaus.crc2.font = "20px Arial";
             Vogelhaus.crc2.fillStyle = "white";
-            Vogelhaus.crc2.fillText("Score: ", 700, 25);
-            Vogelhaus.crc2.fillText("" + score, 760, 25);
+            Vogelhaus.crc2.fillText("Score: ", 660, 25);
+            Vogelhaus.crc2.fillText("" + score, 720, 25);
+            Vogelhaus.crc2.font = "20px Arial";
+            if (foodCount < 3) {
+                Vogelhaus.crc2.fillStyle = "white";
+            }
+            else {
+                Vogelhaus.crc2.fillStyle = "red";
+            }
+            Vogelhaus.crc2.fillText("Food left: ", 660, 50);
+            Vogelhaus.crc2.fillText("" + Math.abs(foodCount - 3), 760, 50);
         }
         else {
             if (score >= 0) {
@@ -344,13 +378,17 @@ var Vogelhaus;
         snowballs.push(ball);
     }
     function throwFood(_event) {
-        let x = _event.clientX;
-        let y = _event.clientY;
-        let food = new Vogelhaus.Food(x, y);
-        food.x = x;
-        food.y = y;
-        food.timer = 25;
-        arrayFood.push(food);
+        if (foodCount < 3) {
+            let x = _event.clientX;
+            let y = _event.clientY;
+            let food = new Vogelhaus.Food(x, y);
+            food.x = x;
+            food.y = y;
+            food.timer = 25;
+            food.lifetime = 100;
+            arrayFood.push(food);
+            foodCount++;
+        }
     }
 })(Vogelhaus || (Vogelhaus = {}));
 //# sourceMappingURL=vogelhaus.js.map

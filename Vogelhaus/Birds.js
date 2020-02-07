@@ -5,6 +5,7 @@ var Vogelhaus;
         State[State["DEAD"] = 0] = "DEAD";
         State[State["ALIVE"] = 1] = "ALIVE";
         State[State["HIT"] = 2] = "HIT";
+        State[State["FEEDING"] = 3] = "FEEDING";
     })(State = Vogelhaus.State || (Vogelhaus.State = {}));
     class Birds extends Vogelhaus.Moveable {
         constructor(_size) {
@@ -28,6 +29,24 @@ var Vogelhaus;
             this.birdColor = Number(this.birdColor.toFixed(0));
             console.log(this.birdColor);
             this.draw();
+        }
+        foodnearby(food) {
+            let a = this.x - food.x;
+            let b = this.y - food.y;
+            if ((Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)) < 200) && food.timer <= 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        changePath(food) {
+            let a = this.x - food.x;
+            let b = this.y - food.y;
+            this.velocity = new Vogelhaus.Vector((-a * 0.1), (-b * 0.1));
+        }
+        resetVelocity() {
+            this.velocity = new Vogelhaus.Vector((Math.random() * -5), (Math.random() * -5 + 2.5));
         }
         draw() {
             Vogelhaus.crc2.save();

@@ -14,10 +14,15 @@ namespace Vogelhaus {
     let arrayFood: Food[] = [];
     let saveBackground: ImageData;
     let timer: number = 60;
+    let vogelhausPlattform: Path2D = new Path2D();
+    let vogelhausHaus: Path2D = new Path2D();
+    let zeroPointVogelhaus: Vector;
 
     let score: number = 0;
     let snowballCount: number = 0;
+    let foodCount: number = 0;
 
+    
     function handleLoad(_event: Event): void {
         timer = 60;
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
@@ -34,7 +39,8 @@ namespace Vogelhaus {
         drawMountains(new Vector(0, horizon), 75, 200, "grey", "white");
         drawMountains(new Vector(0, horizon), 50, 150, "grey", "lightgrey");
         drawSnowman(new Vector(100, 625));
-        drawBirdhouse(new Vector(400, 450));
+        zeroPointVogelhaus = new Vector(400, 450);
+        drawBirdhouse(zeroPointVogelhaus);
         drawTrees(new Vector(700, 600), new Vector(200, 200));
         saveBackground = crc2.getImageData(0, 0, 800, 600);
         drawBirds(new Vector(800, 400));
@@ -210,25 +216,23 @@ namespace Vogelhaus {
         crc2.fillStyle = colorHouse;
         crc2.fillRect(-25, 0, 50, 175);
 
-        crc2.beginPath();
-        crc2.moveTo(-175, 25);
-        crc2.lineTo(-125, -50);
-        crc2.lineTo(125, -50);
-        crc2.lineTo(175, 25);
-        crc2.closePath();
+        vogelhausPlattform.moveTo(-175, 25);
+        vogelhausPlattform.lineTo(-125, -50);
+        vogelhausPlattform.lineTo(125, -50);
+        vogelhausPlattform.lineTo(175, 25);
+        vogelhausPlattform.closePath();
         crc2.fillStyle = colorPlatform;
-        crc2.fill();
+        crc2.fill(vogelhausPlattform);
 
 
-        crc2.beginPath();
-        crc2.moveTo(-100, 0);
-        crc2.lineTo(-100, -150);
-        crc2.lineTo(0, -225);
-        crc2.lineTo(100, -150);
-        crc2.lineTo(100, 0);
-        crc2.closePath();
+        vogelhausHaus.moveTo(-100, 0);
+        vogelhausHaus.lineTo(-100, -150);
+        vogelhausHaus.lineTo(0, -225);
+        vogelhausHaus.lineTo(100, -150);
+        vogelhausHaus.lineTo(100, 0);
+        vogelhausHaus.closePath();
         crc2.fillStyle = colorHouse;
-        crc2.fill();
+        crc2.fill(vogelhausHaus);
 
 
         crc2.beginPath();
@@ -283,6 +287,13 @@ namespace Vogelhaus {
             crc2.clearRect(0, 0, 800, 600);
             crc2.putImageData(saveBackground, 0, 0);
             for (let i: number = 0; i < arrayBirds.length; i++) {
+                for (let i2: number = 0; i2 < arrayFood.length; i2++) {
+                    if (arrayBirds[i].foodnearby(arrayFood[i2])) {
+                        arrayBirds[i].changePath(arrayFood[i2]);
+                        arrayBirds[i].state = State.FEEDING;
+                    }
+              
+                }
                 arrayBirds[i].move();
                 arrayBirds[i].draw();
             }
@@ -292,7 +303,23 @@ namespace Vogelhaus {
             }
             for (let i: number = 0; i < arrayFood.length; i++) {
                 //arrayFood[i].move();
-                arrayFood[i].draw();
+                let food: Food = arrayFood[i];
+                food.setZeroPoint(zeroPointVogelhaus);
+                if ((food.timer == 0 && food.y < 400) || food.lifetime == 0) {
+                    if (food.lifetime == 0) {
+                        for (let birdCount: number = 0; birdCount < arrayBirds.length; ++birdCount) {
+                            if (arrayBirds[birdCount].state == State.FEEDING) {
+                                console.log("test");
+                                arrayBirds[birdCount].resetVelocity();
+                                arrayBirds[birdCount].state = State.ALIVE;
+                            }
+                        }
+                    }
+                    arrayFood.splice(i, 1);
+                } 
+                else {
+                    food.draw();
+                }
             }
             for (let i: number = 0; i < snowballs.length; i++) {
                 if (snowballs[i].timer > 0) {
@@ -315,6 +342,7 @@ namespace Vogelhaus {
                                 arrayBirds.splice(birdNumber, 1);
                             }
                         }
+
                         // wenn kein Vogel getroffen ein Punkt abzug
                         if (!hit) {
                             score--;
@@ -327,12 +355,22 @@ namespace Vogelhaus {
             }
 
             crc2.fillStyle = "#0f0f0f";
-            crc2.fillRect(690, 0, 110, 35);
+            crc2.fillRect(650, 0, 150, 60);
             crc2.font = "20px Arial";
             crc2.fillStyle = "white";
-            crc2.fillText("Score: ", 700, 25);
+            crc2.fillText("Score: ", 660, 25);
 
-            crc2.fillText("" + score, 760, 25);
+            crc2.fillText("" + score, 720, 25);
+            crc2.font = "20px Arial";
+            if (foodCount < 3) {
+                crc2.fillStyle = "white";
+            } else {
+                crc2.fillStyle = "red";
+            }
+
+            crc2.fillText("Food left: ", 660, 50);
+
+            crc2.fillText("" + Math.abs(foodCount - 3), 760, 50);
 
         } else {
             if (score >= 0) {
@@ -429,13 +467,17 @@ namespace Vogelhaus {
     }
 
     function throwFood(_event: MouseEvent): void {
-        let x: number = _event.clientX;
-        let y: number = _event.clientY;
-        let food: Food = new Food(x, y);
-        food.x = x;
-        food.y = y;
-        food.timer = 25;
-        arrayFood.push(food);
+        if (foodCount < 3) {
+            let x: number = _event.clientX;
+            let y: number = _event.clientY;
+            let food: Food = new Food(x, y);
+            food.x = x;
+            food.y = y;
+            food.timer = 25;
+            food.lifetime = 100;
+            arrayFood.push(food);
+            foodCount++;
+        }
 
     }
 

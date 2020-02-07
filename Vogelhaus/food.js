@@ -3,6 +3,8 @@ var Vogelhaus;
     class Food extends Vogelhaus.Moveable {
         constructor(_x, _y) {
             super();
+            this.zeroX = 0;
+            this.zeroY = 0;
             this.foodX = [];
             this.foodY = [];
             this.position = new Vogelhaus.Vector(_x, _y);
@@ -69,6 +71,24 @@ var Vogelhaus;
                 Vogelhaus.crc2.fill();
                 Vogelhaus.crc2.stroke();
             }
+            this.lifetime--;
+        }
+        onPlattform(pathPlattform, pathBarrier = null) {
+            if (Vogelhaus.crc2.isPointInPath(pathPlattform, this.x, this.y)) {
+                if (pathBarrier == null) {
+                    return true;
+                }
+                else {
+                    if (Vogelhaus.crc2.isPointInPath(pathBarrier, this.x, this.y)) {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
+        setZeroPoint(zeroPoint) {
+            this.zeroX += zeroPoint.x;
+            this.zeroY += zeroPoint.y;
         }
     }
     Vogelhaus.Food = Food;

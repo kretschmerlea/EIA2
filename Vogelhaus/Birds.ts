@@ -2,7 +2,8 @@ namespace Vogelhaus {
     export enum State {
         DEAD,
         ALIVE,
-        HIT
+        HIT,
+        FEEDING
     }
 
     export class Birds extends Moveable {
@@ -37,6 +38,27 @@ namespace Vogelhaus {
             console.log(this.birdColor);
 
             this.draw();
+        }
+        
+        foodnearby(food: Food): boolean {
+            let a: number = this.x - food.x;
+            let b: number = this.y - food.y;
+            if ((Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)) < 200) && food.timer <= 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        changePath(food: Food): void {
+            let a: number = this.x - food.x;
+            let b: number = this.y - food.y;
+            this.velocity = new Vector((-a * 0.1), (-b * 0.1));
+        }
+
+        resetVelocity(): void {
+            this.velocity = new Vector((Math.random() * -5), (Math.random() * -5 + 2.5));
         }
 
         draw(): void {
