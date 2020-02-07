@@ -29,7 +29,7 @@ namespace Vogelhaus {
         drawBackground();
         drawSun(new Vector(150, 100));
         drawCloud(new Vector(350, 125), new Vector(200, 75));
-        drawCloudKlein(new Vector(550, 150), new Vector(100, 50));
+        drawCloudSmall(new Vector(550, 150), new Vector(100, 50));
         drawMountains(new Vector(0, horizon), 75, 200, "grey", "white");
         drawMountains(new Vector(0, horizon), 50, 150, "grey", "lightgrey");
         drawSnowman(new Vector(100, 625));
@@ -101,7 +101,7 @@ namespace Vogelhaus {
         crc2.restore();
     }
 
-    function drawCloudKlein(_position: Vector, _size: Vector): void {
+    function drawCloudSmall(_position: Vector, _size: Vector): void {
         console.log("Cloud", _position, _size);
 
         let nParticles: number = 20;
@@ -306,7 +306,7 @@ namespace Vogelhaus {
                             //console.log(snowballs.length + arrayBirds.length);
                             let bird: Birds = arrayBirds[birdNumber];
                             //console.log("x: " + bird.x + "y: " + bird.y);
-                            if (snowballs[i].checkIfHit(bird)) {
+                            if (snowballs[i].ifHit(bird)) {
                                 hit = true;
                                 bird.state = State.DEAD;
                                 score += 10;

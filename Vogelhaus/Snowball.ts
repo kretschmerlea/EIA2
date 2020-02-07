@@ -30,7 +30,7 @@ namespace Vogelhaus {
 
             }
         }
-        checkIfHit(bird: Birds): boolean {
+        ifHit(bird: Birds): boolean {
             //if (this.timer == 0) {
                 crc2.lineWidth = 50;
                 crc2.beginPath();

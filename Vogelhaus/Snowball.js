@@ -22,7 +22,7 @@ var Vogelhaus;
                 this.timer--;
             }
         }
-        checkIfHit(bird) {
+        ifHit(bird) {
             //if (this.timer == 0) {
             Vogelhaus.crc2.lineWidth = 50;
             Vogelhaus.crc2.beginPath();

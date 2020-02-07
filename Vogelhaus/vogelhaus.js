@@ -24,7 +24,7 @@ var Vogelhaus;
         drawBackground();
         drawSun(new Vogelhaus.Vector(150, 100));
         drawCloud(new Vogelhaus.Vector(350, 125), new Vogelhaus.Vector(200, 75));
-        drawCloudKlein(new Vogelhaus.Vector(550, 150), new Vogelhaus.Vector(100, 50));
+        drawCloudSmall(new Vogelhaus.Vector(550, 150), new Vogelhaus.Vector(100, 50));
         drawMountains(new Vogelhaus.Vector(0, horizon), 75, 200, "grey", "white");
         drawMountains(new Vogelhaus.Vector(0, horizon), 50, 150, "grey", "lightgrey");
         drawSnowman(new Vogelhaus.Vector(100, 625));
@@ -81,7 +81,7 @@ var Vogelhaus;
         }
         Vogelhaus.crc2.restore();
     }
-    function drawCloudKlein(_position, _size) {
+    function drawCloudSmall(_position, _size) {
         console.log("Cloud", _position, _size);
         let nParticles = 20;
         let radiusParticle = 40;
@@ -242,7 +242,7 @@ var Vogelhaus;
                             //console.log(snowballs.length + arrayBirds.length);
                             let bird = arrayBirds[birdNumber];
                             //console.log("x: " + bird.x + "y: " + bird.y);
-                            if (snowballs[i].checkIfHit(bird)) {
+                            if (snowballs[i].ifHit(bird)) {
                                 hit = true;
                                 bird.state = Vogelhaus.State.DEAD;
                                 score += 10;
