@@ -4,6 +4,7 @@ var Vogelhaus;
     //     x: number;
     //     y: number;
     // }
+    let url = "https://birdiess.herokuapp.com/";
     window.addEventListener("load", handleLoad);
     let golden = 0.62;
     let arrayBirds = [];

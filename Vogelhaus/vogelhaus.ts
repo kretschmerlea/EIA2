@@ -3,6 +3,7 @@ namespace Vogelhaus {
     //     x: number;
     //     y: number;
     // }
+    let url: string = "https://birdiess.herokuapp.com/";
 
     window.addEventListener("load", handleLoad);
     export let crc2: CanvasRenderingContext2D;

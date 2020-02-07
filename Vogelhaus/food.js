@@ -73,4 +73,4 @@ var Vogelhaus;
     }
     Vogelhaus.Food = Food;
 })(Vogelhaus || (Vogelhaus = {}));
-//# sourceMappingURL=food.js.map
+//# sourceMappingURL=Food.js.map
