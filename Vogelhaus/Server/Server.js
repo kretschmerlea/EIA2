@@ -12,13 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Http = require("http");
 const Url = require("url");
 const Mongo = require("mongodb");
+//mongodb+srv://eia:<password>@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority
 var Vogelhaus;
 (function (Vogelhaus) {
     let orders;
     let port = process.env.PORT;
     if (port == undefined)
         port = 5001;
-    let databaseUrl = "mongodb://localhost:27017";
+    let databaseUrl = "mongodb+srv://eia:inverted@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority";
     startServer(port);
     connectToDatabase(databaseUrl);
     function startServer(_port) {

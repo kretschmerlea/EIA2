@@ -3,6 +3,8 @@ import * as Http from "http";
 import * as Url from "url";
 import * as Mongo from "mongodb";
 
+//mongodb+srv://eia:<password>@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority
+
 export namespace Vogelhaus {
     interface Order {
         [type: string]: string | string[];
@@ -14,7 +16,7 @@ export namespace Vogelhaus {
     if (port == undefined)
         port = 5001;
 
-    let databaseUrl: string = "mongodb://localhost:27017";
+    let databaseUrl: string = "mongodb+srv://eia:inverted@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority";
 
     startServer(port);
     connectToDatabase(databaseUrl);
