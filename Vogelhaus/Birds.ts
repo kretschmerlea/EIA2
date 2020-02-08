@@ -80,7 +80,7 @@ namespace Vogelhaus {
             this.y = this.position.y;
             crc2.fillStyle = this.colorBird[this.birdColor];
 
-            console.log("timer: " + this.pickingTimer + " " + this.state);
+            
             if (this.state == State.PICKING && this.pickingTimer < 30) {
                 crc2.arc(0, 10, 18, 0, 2 * Math.PI);
                 crc2.arc(15, 15, 25, 0, 1.3 * Math.PI);

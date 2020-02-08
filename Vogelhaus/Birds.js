@@ -64,7 +64,6 @@ var Vogelhaus;
             this.x = this.position.x;
             this.y = this.position.y;
             Vogelhaus.crc2.fillStyle = this.colorBird[this.birdColor];
-            console.log("timer: " + this.pickingTimer + " " + this.state);
             if (this.state == State.PICKING && this.pickingTimer < 30) {
                 Vogelhaus.crc2.arc(0, 10, 18, 0, 2 * Math.PI);
                 Vogelhaus.crc2.arc(15, 15, 25, 0, 1.3 * Math.PI);
