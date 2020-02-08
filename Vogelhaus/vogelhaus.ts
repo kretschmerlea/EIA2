@@ -282,7 +282,7 @@ namespace Vogelhaus {
     }
 
     function updateCanvas(): void {
-        if (snowballCount < 20) {
+        if (snowballCount < 20 && arrayBirds.length > 0) {
             setTimeout(updateCanvas, 1000 / 30);
             crc2.clearRect(0, 0, 800, 600);
             crc2.putImageData(saveBackground, 0, 0);
@@ -290,7 +290,7 @@ namespace Vogelhaus {
                 for (let i2: number = 0; i2 < arrayFood.length; i2++) {
                     if (arrayBirds[i].foodnearby(arrayFood[i2])) {
                         arrayBirds[i].changePath(arrayFood[i2]);
-                        arrayBirds[i].state = State.FEEDING;
+                        //arrayBirds[i].state = State.FEEDING;
                     }
               
                 }
@@ -308,8 +308,7 @@ namespace Vogelhaus {
                 if ((food.timer == 0 && food.y < 400) || food.lifetime == 0) {
                     if (food.lifetime == 0) {
                         for (let birdCount: number = 0; birdCount < arrayBirds.length; ++birdCount) {
-                            if (arrayBirds[birdCount].state == State.FEEDING) {
-                                console.log("test");
+                            if (arrayBirds[birdCount].state == State.FEEDING || arrayBirds[birdCount].state == State.PICKING) {
                                 arrayBirds[birdCount].resetVelocity();
                                 arrayBirds[birdCount].state = State.ALIVE;
                             }
@@ -379,6 +378,7 @@ namespace Vogelhaus {
             }
             else {
                 endScreen(false);
+            
             }
         }
     }
@@ -391,7 +391,7 @@ namespace Vogelhaus {
             crc2.fillStyle = "white";
             crc2.fillText("Game over", 350, 250);
             crc2.font = "30px Arial";
-            crc2.fillText("Your Final Score:" + " " + score, 270, 300);
+            crc2.fillText("Your Final Score:" + " " + score, 265, 300);
         }
         else {
             crc2.fillStyle = "#4C0B5F";
@@ -474,7 +474,7 @@ namespace Vogelhaus {
             food.x = x;
             food.y = y;
             food.timer = 25;
-            food.lifetime = 100;
+            food.lifetime = 250;
             arrayFood.push(food);
             foodCount++;
         }

@@ -218,7 +218,7 @@ var Vogelhaus;
         Vogelhaus.crc2.restore();
     }
     function updateCanvas() {
-        if (snowballCount < 20) {
+        if (snowballCount < 20 && arrayBirds.length > 0) {
             setTimeout(updateCanvas, 1000 / 30);
             Vogelhaus.crc2.clearRect(0, 0, 800, 600);
             Vogelhaus.crc2.putImageData(saveBackground, 0, 0);
@@ -226,7 +226,7 @@ var Vogelhaus;
                 for (let i2 = 0; i2 < arrayFood.length; i2++) {
                     if (arrayBirds[i].foodnearby(arrayFood[i2])) {
                         arrayBirds[i].changePath(arrayFood[i2]);
-                        arrayBirds[i].state = Vogelhaus.State.FEEDING;
+                        //arrayBirds[i].state = State.FEEDING;
                     }
                 }
                 arrayBirds[i].move();
@@ -243,8 +243,7 @@ var Vogelhaus;
                 if ((food.timer == 0 && food.y < 400) || food.lifetime == 0) {
                     if (food.lifetime == 0) {
                         for (let birdCount = 0; birdCount < arrayBirds.length; ++birdCount) {
-                            if (arrayBirds[birdCount].state == Vogelhaus.State.FEEDING) {
-                                console.log("test");
+                            if (arrayBirds[birdCount].state == Vogelhaus.State.FEEDING || arrayBirds[birdCount].state == Vogelhaus.State.PICKING) {
                                 arrayBirds[birdCount].resetVelocity();
                                 arrayBirds[birdCount].state = Vogelhaus.State.ALIVE;
                             }
@@ -318,7 +317,7 @@ var Vogelhaus;
             Vogelhaus.crc2.fillStyle = "white";
             Vogelhaus.crc2.fillText("Game over", 350, 250);
             Vogelhaus.crc2.font = "30px Arial";
-            Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 270, 300);
+            Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 265, 300);
         }
         else {
             Vogelhaus.crc2.fillStyle = "#4C0B5F";
@@ -385,7 +384,7 @@ var Vogelhaus;
             food.x = x;
             food.y = y;
             food.timer = 25;
-            food.lifetime = 100;
+            food.lifetime = 250;
             arrayFood.push(food);
             foodCount++;
         }
