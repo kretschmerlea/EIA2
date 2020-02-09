@@ -30,20 +30,20 @@ namespace Vogelhaus {
                 //crc2.arc(this.x + this.x * 0.01, (this.y - (this.timer * 3) + this.y - (this.timer * 3) * 0.01), ((this.timer) / 3) + 15, 0, 2 * Math.PI);
                 //crc2.arc(this.x + this.x * 0.01, (this.y - (this.timer * 3)), ((this.timer) / 3) + 15, 0, 2 * Math.PI);
                 //crc2.arc(this.x, (this.y - (this.timer * 3) + this.y - (this.timer * 3) * 0.01), ((this.timer) / 3) + 15, 0, 2 * Math.PI);
-                let nFood: number = 5;
+                let nFood: number = 5; //Anzahl einzelne Futterkreise 
                 
                 
-                food.arc(0, 0, this.timer * radiusFood / 5, 0, 2 * Math.PI);
+                food.arc(0, 0, this.timer * radiusFood / 5, 0, 2 * Math.PI); //Radius einzelner Futterbälle, wird kleiner je kleiner Timer
 
                 crc2.save();
                 crc2.translate(this.x, this.y);
         
                 let size: Vector = new Vector(15, 15);
-                let x: number[] = [];
+                let x: number[] = []; //x und y Koordinate der Futterbälle wird zwischengespeichert
                 let y: number[] = [];
-                for (let drawn: number = 0; drawn < nFood; drawn++) {
+                for (let drawn: number = 0; drawn < nFood; drawn++) { //bei Klick werden 5 Futterbälle gezeichnet, die Futter bilden
                     crc2.save();
-                    x.push(Math.random() * (size.x + this.timer));
+                    x.push(Math.random() * (size.x + this.timer)); //random x und y Position
                     y.push((Math.random() * (size.y + this.timer)));
                     crc2.translate(x[drawn], y[drawn]);
                     crc2.fill(food);
@@ -64,7 +64,7 @@ namespace Vogelhaus {
                     this.foodY = y;
                 }
             }
-            else {
+            else { //Futter wenn es liegen bleibt
                 crc2.fillStyle = "#B45F04";
                 crc2.strokeStyle = "#B45F04";
                 crc2.lineWidth = 1;
@@ -88,7 +88,7 @@ namespace Vogelhaus {
             this.lifetime--;
         }
 
-        onPlattform(pathPlattform: Path2D, pathBarrier: Path2D = null): boolean {
+        onPlattform(pathPlattform: Path2D, pathBarrier: Path2D = null): boolean { //wo wird das genutzt?
             if (crc2.isPointInPath(pathPlattform, this.x, this.y)) {
                 if (pathBarrier == null) {
                     return true;
@@ -102,30 +102,9 @@ namespace Vogelhaus {
             return false;
         }
 
-        setZeroPoint(zeroPoint: Vector): void {
+        setZeroPoint(zeroPoint: Vector): void { 
             this.zeroX += zeroPoint.x;
             this.zeroY += zeroPoint.y;
         }
-
-        /*checkIfHit(bird: Birds): boolean {
-            //if (this.timer == 0) {
-                crc2.lineWidth = 50;
-                crc2.beginPath();
-                crc2.moveTo(bird.x, bird.y);
-                crc2.arc(bird.x, bird.y, 60, 0, 2 * Math.PI);
-                crc2.closePath();
-                //console.log(this.x + " " + this.y);
-                //console.log("x: " + bird.x + "y: " + bird.y);
-                if (crc2.isPointInPath(this.x, this.y)) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            //} 
-            
-            //return false;
-        }*/
-
     }
 }

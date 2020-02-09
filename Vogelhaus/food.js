@@ -24,16 +24,16 @@ var Vogelhaus;
                 //crc2.arc(this.x + this.x * 0.01, (this.y - (this.timer * 3) + this.y - (this.timer * 3) * 0.01), ((this.timer) / 3) + 15, 0, 2 * Math.PI);
                 //crc2.arc(this.x + this.x * 0.01, (this.y - (this.timer * 3)), ((this.timer) / 3) + 15, 0, 2 * Math.PI);
                 //crc2.arc(this.x, (this.y - (this.timer * 3) + this.y - (this.timer * 3) * 0.01), ((this.timer) / 3) + 15, 0, 2 * Math.PI);
-                let nFood = 5;
-                food.arc(0, 0, this.timer * radiusFood / 5, 0, 2 * Math.PI);
+                let nFood = 5; //Anzahl einzelne Futterkreise 
+                food.arc(0, 0, this.timer * radiusFood / 5, 0, 2 * Math.PI); //Radius einzelner Futterbälle, wird kleiner je kleiner Timer
                 Vogelhaus.crc2.save();
                 Vogelhaus.crc2.translate(this.x, this.y);
                 let size = new Vogelhaus.Vector(15, 15);
-                let x = [];
+                let x = []; //x und y Koordinate der Futterbälle wird zwischengespeichert
                 let y = [];
-                for (let drawn = 0; drawn < nFood; drawn++) {
+                for (let drawn = 0; drawn < nFood; drawn++) { //bei Klick werden 5 Futterbälle gezeichnet, die Futter bilden
                     Vogelhaus.crc2.save();
-                    x.push(Math.random() * (size.x + this.timer));
+                    x.push(Math.random() * (size.x + this.timer)); //random x und y Position
                     y.push((Math.random() * (size.y + this.timer)));
                     Vogelhaus.crc2.translate(x[drawn], y[drawn]);
                     Vogelhaus.crc2.fill(food);
@@ -51,7 +51,7 @@ var Vogelhaus;
                     this.foodY = y;
                 }
             }
-            else {
+            else { //Futter wenn es liegen bleibt
                 Vogelhaus.crc2.fillStyle = "#B45F04";
                 Vogelhaus.crc2.strokeStyle = "#B45F04";
                 Vogelhaus.crc2.lineWidth = 1;
