@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var Vogelhaus;
 (function (Vogelhaus) {
     // interface Vector {
@@ -337,24 +346,28 @@ var Vogelhaus;
             }
         }
     }
+    let username = prompt("Enter your name here!");
     function endScreen(winner) {
         if (winner) {
             Vogelhaus.crc2.fillStyle = "#4C0B5F";
             Vogelhaus.crc2.fillRect(250, 225, 300, 150);
-            Vogelhaus.crc2.font = "20px Arial";
+            Vogelhaus.crc2.font = "25px Impact, Charcoal, sans-serif";
             Vogelhaus.crc2.fillStyle = "white";
-            Vogelhaus.crc2.fillText("Game over", 350, 250);
-            Vogelhaus.crc2.font = "30px Arial";
-            Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 260, 300);
+            Vogelhaus.crc2.fillText("Game over!", 350, 250);
+            Vogelhaus.crc2.font = "30px Impact, Charcoal, sans-serif";
+            Vogelhaus.crc2.fillText("Username:" + " " + username, 260, 300);
+            Vogelhaus.crc2.font = "30px Impact, Charcoal, sans-serif";
+            Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 260, 350);
+            sendScore();
         }
         else {
             Vogelhaus.crc2.fillStyle = "#4C0B5F"; //Endscreen Spieler hat verloren, sprich score < 0
             Vogelhaus.crc2.fillRect(250, 225, 300, 150);
-            Vogelhaus.crc2.font = "20px Arial";
+            Vogelhaus.crc2.font = "25px Impact, Charcoal, sans-serif";
             Vogelhaus.crc2.fillStyle = "white";
-            Vogelhaus.crc2.fillText("Game over", 350, 250);
-            Vogelhaus.crc2.font = "30px Arial";
-            Vogelhaus.crc2.fillText("You lose!", 340, 300);
+            Vogelhaus.crc2.fillText("Game over!", 350, 250);
+            Vogelhaus.crc2.font = "50px Impact, Charcoal, sans-serif";
+            Vogelhaus.crc2.fillText("You lose!", 300, 320);
         }
     }
     function drawBirds(_size) {
@@ -418,6 +431,29 @@ var Vogelhaus;
             arrayFood.push(food);
             foodCount++;
         }
+    }
+    function sendScore() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let query = "name=" + username + "&score=" + score;
+            console.log(query);
+            let response = yield fetch(url + "?" + query.toString());
+            let responseText = yield response.text();
+            // await fetch("index.html?" + query.toString());
+            // alert("Order sent ");
+            alert(responseText);
+            console.log(responseText);
+        });
+    }
+    function reportScore(_event) {
+        return __awaiter(this, void 0, void 0, function* () {
+            //console.log("");
+            let query = "command=retrieve";
+            let response = yield fetch(url + "?" + query);
+            let responseText = yield response.text();
+            alert(responseText);
+            let orders = document.querySelector("div#report");
+            orders.innerText = responseText;
+        });
     }
 })(Vogelhaus || (Vogelhaus = {}));
 //# sourceMappingURL=vogelhaus.js.map

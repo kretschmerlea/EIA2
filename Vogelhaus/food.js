@@ -73,23 +73,6 @@ var Vogelhaus;
             }
             this.lifetime--;
         }
-        onPlattform(pathPlattform, pathBarrier = null) {
-            if (Vogelhaus.crc2.isPointInPath(pathPlattform, this.x, this.y)) {
-                if (pathBarrier == null) {
-                    return true;
-                }
-                else {
-                    if (Vogelhaus.crc2.isPointInPath(pathBarrier, this.x, this.y)) {
-                        return false;
-                    }
-                }
-            }
-            return false;
-        }
-        setZeroPoint(zeroPoint) {
-            this.zeroX += zeroPoint.x;
-            this.zeroY += zeroPoint.y;
-        }
     }
     Vogelhaus.Food = Food;
 })(Vogelhaus || (Vogelhaus = {}));

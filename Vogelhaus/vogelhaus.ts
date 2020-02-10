@@ -396,25 +396,30 @@ namespace Vogelhaus {
             }
         }
     }
-    
+    let username: string = prompt("Enter your name here!");
     function endScreen(winner: boolean): void { //Endscreen wenn Spieler "gewonnen" hat, sprich score >= 0
         if (winner) {
+           
             crc2.fillStyle = "#4C0B5F";
             crc2.fillRect(250, 225, 300, 150);
-            crc2.font = "20px Arial";
+            crc2.font = "25px Impact, Charcoal, sans-serif";
             crc2.fillStyle = "white";
-            crc2.fillText("Game over", 350, 250);
-            crc2.font = "30px Arial";
-            crc2.fillText("Your Final Score:" + " " + score, 260, 300);
+            crc2.fillText("Game over!", 350, 250);
+            crc2.font = "30px Impact, Charcoal, sans-serif";
+            crc2.fillText("Username:" + " " + username, 260, 300); 
+            crc2.font = "30px Impact, Charcoal, sans-serif";
+            crc2.fillText("Your Final Score:" + " " + score, 260, 350);
+            sendScore();  
+            
         }
         else {
             crc2.fillStyle = "#4C0B5F"; //Endscreen Spieler hat verloren, sprich score < 0
             crc2.fillRect(250, 225, 300, 150);
-            crc2.font = "20px Arial";
+            crc2.font = "25px Impact, Charcoal, sans-serif";
             crc2.fillStyle = "white";
-            crc2.fillText("Game over", 350, 250);
-            crc2.font = "30px Arial";
-            crc2.fillText("You lose!", 340, 300);
+            crc2.fillText("Game over!", 350, 250);
+            crc2.font = "50px Impact, Charcoal, sans-serif";
+            crc2.fillText("You lose!", 300, 320);
         }
     }
     function drawBirds(_size: Vector): void {
@@ -498,5 +503,25 @@ namespace Vogelhaus {
         }
 
     }
+    async function sendScore(): Promise<void> {
+        let query: string = "name=" + username + "&score=" + score;
+        console.log(query);
+        let response: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response.text();
+        // await fetch("index.html?" + query.toString());
+        // alert("Order sent ");
+        alert(responseText);
+        console.log(responseText);
+    }
+    async function reportScore(_event: Event): Promise<void> {
+        //console.log("");
+        let query: string = "command=retrieve";
+        let response: Response = await fetch(url + "?" + query);
+        let responseText: string = await response.text();
 
+        alert(responseText);
+        let orders: HTMLDivElement = <HTMLDivElement>document.querySelector("div#report");
+        orders.innerText = responseText;
+    }
 }
+ 

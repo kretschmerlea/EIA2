@@ -87,24 +87,5 @@ namespace Vogelhaus {
             }
             this.lifetime--;
         }
-
-        onPlattform(pathPlattform: Path2D, pathBarrier: Path2D = null): boolean { //wo wird das genutzt?
-            if (crc2.isPointInPath(pathPlattform, this.x, this.y)) {
-                if (pathBarrier == null) {
-                    return true;
-                }
-                else {
-                    if (crc2.isPointInPath(pathBarrier, this.x, this.y)) {
-                        return false;
-                    }
-                }
-            }
-            return false;
-        }
-
-        setZeroPoint(zeroPoint: Vector): void { 
-            this.zeroX += zeroPoint.x;
-            this.zeroY += zeroPoint.y;
-        }
     }
 }
