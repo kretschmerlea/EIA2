@@ -18,7 +18,7 @@ var Vogelhaus;
     let databaseURL;
     let dbName = "Vogelhaus";
     let dbCollection = "Scores";
-    databaseURL = "mongodb+srv://eia:<Inverted>@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority";
+    databaseURL = "mongodb+srv://eia:Inverted@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority";
     let port = process.env.PORT;
     if (port == undefined)
         port = 5001;

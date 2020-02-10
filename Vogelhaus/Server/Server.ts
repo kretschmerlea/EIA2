@@ -10,7 +10,7 @@ export namespace Vogelhaus {
     let dbName: string = "Vogelhaus";
     let dbCollection: string = "Scores";
 
-    databaseURL = "mongodb+srv://eia:<Inverted>@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority";
+    databaseURL = "mongodb+srv://eia:Inverted@cluster0-g5riz.mongodb.net/test?retryWrites=true&w=majority";
 
     let port: number | string | undefined = process.env.PORT;
     if (port == undefined)
