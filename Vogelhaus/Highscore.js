@@ -21,7 +21,7 @@ var Vogelhaus;
             let responseText = yield response.text();
             let finalResponse = JSON.parse(responseText);
             console.log(finalResponse);
-            let highscorelists = document.querySelector("div#report");
+            let highscorelists = document.querySelector("div#Scores");
             highscorelists.innerText = finalResponse;
             console.log(finalResponse);
         });
