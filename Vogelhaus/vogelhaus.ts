@@ -515,7 +515,7 @@ namespace Vogelhaus {
     async function sendScore(): Promise<void> {
         let query: string = "name=" + username + "&score=" + score;
         console.log(query);
-        let response: Response = await fetch(url + "?" + query.toString());
+        let response: Response = await fetch(url + "?" + query);
         let responseText: string = await response.text();
         // await fetch("index.html?" + query.toString());
         // alert("Order sent ");

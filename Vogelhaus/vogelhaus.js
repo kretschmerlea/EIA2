@@ -441,7 +441,7 @@ var Vogelhaus;
         return __awaiter(this, void 0, void 0, function* () {
             let query = "name=" + username + "&score=" + score;
             console.log(query);
-            let response = yield fetch(url + "?" + query.toString());
+            let response = yield fetch(url + "?" + query);
             let responseText = yield response.text();
             // await fetch("index.html?" + query.toString());
             // alert("Order sent ");
