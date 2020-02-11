@@ -445,8 +445,8 @@ var Vogelhaus;
             let responseText = yield response.text();
             // await fetch("index.html?" + query.toString());
             // alert("Order sent ");
-            alert(responseText);
-            console.log(responseText);
+            alert(response);
+            //console.log(responseText);
         });
     }
     /*async function reportScore(): Promise<void> {
