@@ -29,12 +29,12 @@ var Vogelhaus;
             //console.log(finalResponse);
             let scores = document.querySelector("div#scores");
             let html = "";
-            html += "<table>";
-            html += "<thead><tr><th>Name</th><th>Score<th></tr><thead><tbody>";
+            html += "<table id='highscorelist'>";
+            html += "<thead id='headline'><tr><th>Name</th><th>Score<th></tr><thead><tbody>";
             for (let i = finalResponse.length - 1; i >= 0; i--) {
                 let scoreResult = finalResponse[i];
                 if (scoreResult.name != null && scoreResult.score != null) {
-                    html += "<tr><td>";
+                    html += "<tr id='place" + i + "' class='highscore-row'><td>";
                     html += scoreResult.name;
                     html += "</td><td>";
                     html += scoreResult.score.toString();
