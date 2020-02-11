@@ -48,7 +48,7 @@ export namespace Vogelhaus {
             // }
 
             if (url.query["command"] == "retrieve") {
-                let report: any[] | string = await retrieveOrders();
+                let report: any [] | string = await retrieveOrders();
                 if (report == "We encountered tecnical problems. Please try again later")
                     _response.write(report);
                 else
