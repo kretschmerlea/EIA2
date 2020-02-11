@@ -359,7 +359,7 @@ var Vogelhaus;
             Vogelhaus.crc2.font = "30px Impact, Charcoal, sans-serif";
             Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 260, 350);
             sendScore();
-            reportScore();
+            //reportScore();  
         }
         else {
             Vogelhaus.crc2.fillStyle = "#4C0B5F"; //Endscreen Spieler hat verloren, sprich score < 0

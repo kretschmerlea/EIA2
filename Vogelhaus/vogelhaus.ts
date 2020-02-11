@@ -410,7 +410,7 @@ namespace Vogelhaus {
             crc2.font = "30px Impact, Charcoal, sans-serif";
             crc2.fillText("Your Final Score:" + " " + score, 260, 350);
             sendScore();
-            reportScore();  
+            //reportScore();  
             
         }
         else {
@@ -519,7 +519,6 @@ namespace Vogelhaus {
         let query: string = "command=retrieve";
         let response: Response = await fetch(url + "?" + query);
         let responseText: string = await response.text();
-
         alert(responseText);
         let orders: HTMLDivElement = <HTMLDivElement>document.querySelector("div#report");
         orders.innerText = responseText;
