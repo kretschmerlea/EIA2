@@ -12,12 +12,35 @@ namespace Vogelhaus {
         let query: string = "command=retrieve";
         let response: Response = await fetch(url + "?" + query);
         let responseText: string = await response.text();
-        let finalResponse: any = JSON.parse(responseText);
-        console.log(finalResponse);
+        let finalResponse: ScoreResult[] = [];
+        let rawJSON: any[] = JSON.parse(responseText);
+        
+        for (let i: number = 0; i < rawJSON.length; ++i) {
+            finalResponse.push(rawJSON[i]);
+            console.log(finalResponse[i]);
+        }
+
+        finalResponse = finalResponse.sort((a, b) => a.score - b.score);
+        //console.log(finalResponse);
+
 
         let scores: HTMLDivElement = <HTMLDivElement>document.querySelector("div#scores");
-        scores.innerText = finalResponse;
-        console.log(finalResponse);
+        let html: string = "";
+        html += "<table>";
+        html += "<thead><tr><th>Name</th><th>Score<th></tr><thead><tbody>";
+        for (let i: number = finalResponse.length - 1; i >= 0; i--) {
+            let scoreResult: ScoreResult = finalResponse[i];
+            if (scoreResult.name != null && scoreResult.score != null) {
+                html += "<tr><td>";
+                html += scoreResult.name;
+                html += "</td><td>";
+                html += scoreResult.score.toString();
+                html += "</td></tr>";
+            }
+        }
+
+        html += "</tbody></table>";
+        scores.innerHTML = html;
         
     }
 }

@@ -19,11 +19,30 @@ var Vogelhaus;
             let query = "command=retrieve";
             let response = yield fetch(url + "?" + query);
             let responseText = yield response.text();
-            let finalResponse = JSON.parse(responseText);
-            console.log(finalResponse);
+            let finalResponse = [];
+            let rawJSON = JSON.parse(responseText);
+            for (let i = 0; i < rawJSON.length; ++i) {
+                finalResponse.push(rawJSON[i]);
+                console.log(finalResponse[i]);
+            }
+            finalResponse = finalResponse.sort((a, b) => a.score - b.score);
+            //console.log(finalResponse);
             let scores = document.querySelector("div#scores");
-            scores.innerText = finalResponse;
-            console.log(finalResponse);
+            let html = "";
+            html += "<table>";
+            html += "<thead><tr><th>Name</th><th>Score<th></tr><thead><tbody>";
+            for (let i = finalResponse.length - 1; i >= 0; i--) {
+                let scoreResult = finalResponse[i];
+                if (scoreResult.name != null && scoreResult.score != null) {
+                    html += "<tr><td>";
+                    html += scoreResult.name;
+                    html += "</td><td>";
+                    html += scoreResult.score.toString();
+                    html += "</td></tr>";
+                }
+            }
+            html += "</tbody></table>";
+            scores.innerHTML = html;
         });
     }
 })(Vogelhaus || (Vogelhaus = {}));

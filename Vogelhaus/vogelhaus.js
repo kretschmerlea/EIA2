@@ -373,7 +373,7 @@ var Vogelhaus;
         setTimeout(StartingPage, 5000);
     }
     function StartingPage() {
-        window.open("https://kretschmerlea.github.io/EIA2/Vogelhaus/Vogelhaus_StartingPage.html", "_self");
+        window.open("./Vogelhaus_StartingPage.html", "_self");
     }
     function drawBirds(_size) {
         console.log("Birds");
@@ -439,14 +439,16 @@ var Vogelhaus;
     }
     function sendScore() {
         return __awaiter(this, void 0, void 0, function* () {
-            let query = "name=" + username + "&score=" + score;
-            console.log(query);
-            let response = yield fetch(url + "?" + query);
-            let responseText = yield response.text();
-            // await fetch("index.html?" + query.toString());
-            // alert("Order sent ");
-            alert(response);
-            //console.log(responseText);
+            if (score != null && username != null) {
+                let query = "name=" + username + "&score=" + score;
+                console.log(query);
+                let response = yield fetch(url + "?" + query);
+                let responseText = yield response.text();
+                // await fetch("index.html?" + query.toString());
+                // alert("Order sent ");
+                //alert(response);
+                //console.log(responseText);
+            }
         });
     }
     /*async function reportScore(): Promise<void> {
