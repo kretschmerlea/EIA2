@@ -423,7 +423,7 @@ namespace Vogelhaus {
             crc2.font = "50px Impact, Charcoal, sans-serif";
             crc2.fillText("You lose!", 300, 320);
         }
-        window.open("https://kretschmerlea.github.io/EIA2/Vogelhaus/Vogelhaus_Startseite.html", "_self");
+        window.open("https://kretschmerlea.github.io/EIA2/Vogelhaus/Vogelhaus_StartingPage.html", "_self");
     }
     function drawBirds(_size: Vector): void {
         console.log("Birds");
