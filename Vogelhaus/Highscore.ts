@@ -15,8 +15,8 @@ namespace Vogelhaus {
         let finalResponse: any = JSON.parse(responseText);
         console.log(finalResponse);
 
-        let highscorelists: HTMLDivElement = <HTMLDivElement>document.querySelector("div#Scores");
-        highscorelists.innerText = finalResponse;
+        let Scores: HTMLDivElement = <HTMLDivElement>document.querySelector("div#Scores");
+        Scores.innerText = finalResponse;
         console.log(finalResponse);
         
     }
