@@ -359,7 +359,7 @@ var Vogelhaus;
             Vogelhaus.crc2.font = "30px Impact, Charcoal, sans-serif";
             Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 260, 350);
             sendScore();
-            reportScore();
+            //reportScore();  
         }
         else {
             Vogelhaus.crc2.fillStyle = "#4C0B5F"; //Endscreen Spieler hat verloren, sprich score < 0
@@ -370,6 +370,7 @@ var Vogelhaus;
             Vogelhaus.crc2.font = "50px Impact, Charcoal, sans-serif";
             Vogelhaus.crc2.fillText("You lose!", 300, 320);
         }
+        window.open("https://kretschmerlea.github.io/EIA2/Vogelhaus/Vogelhaus_Startseite.html", "_self");
     }
     function drawBirds(_size) {
         console.log("Birds");
@@ -445,7 +446,6 @@ var Vogelhaus;
             console.log(responseText);
         });
     }
-    window.open("https://kretschmerlea.github.io/EIA2/Vogelhaus/Vogelhaus_Startseite.html", "_self");
     /*async function reportScore(): Promise<void> {
         //console.log("");
         let query: string = "command=retrieve";
