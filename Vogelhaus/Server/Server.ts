@@ -48,7 +48,7 @@ export namespace Vogelhaus {
             // }
 
             if (url.query["command"] == "retrieve") {
-                let report: any [] | string = await retrieveOrders();
+                let report: any [] | string = await retrieveScores();
                 if (report == "We encountered tecnical problems. Please try again later")
                     _response.write(report);
                 else
@@ -65,7 +65,7 @@ export namespace Vogelhaus {
         _response.end();
     }
 
-    async function retrieveOrders(): Promise<any[] | string> {
+    async function retrieveScores(): Promise<any[] | string> {
         // console.log("Asking DB about Orders ", highscores.find());
         let cursor: Mongo.Cursor = await highscores.find();
         let answer: Promise<any[]> = await cursor.toArray();

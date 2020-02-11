@@ -410,7 +410,7 @@ namespace Vogelhaus {
             crc2.font = "30px Impact, Charcoal, sans-serif";
             crc2.fillText("Your Final Score:" + " " + score, 260, 350);
             sendScore();
-            //reportScore();  
+            reportScore();  
             
         }
         else {
@@ -514,14 +514,22 @@ namespace Vogelhaus {
         alert(responseText);
         console.log(responseText);
     }
-    async function reportScore(): Promise<void> {
+    window.open("https://kretschmerlea.github.io/EIA2/Vogelhaus/Vogelhaus_Startseite.html", "_self");
+    /*async function reportScore(): Promise<void> {
         //console.log("");
         let query: string = "command=retrieve";
         let response: Response = await fetch(url + "?" + query);
         let responseText: string = await response.text();
+
+        //let result: ScoreResult[] = JSON.parse(responseText);
+
+        //for (let i: number = 0; i < result.length; i++) {
+            
+        //}
+
         alert(responseText);
         let orders: HTMLDivElement = <HTMLDivElement>document.querySelector("div#report");
-        orders.innerText = responseText;
-    }
+        //orders.innerText = responseText;
+    }*/
 }
  

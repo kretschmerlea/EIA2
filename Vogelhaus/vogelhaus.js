@@ -359,7 +359,7 @@ var Vogelhaus;
             Vogelhaus.crc2.font = "30px Impact, Charcoal, sans-serif";
             Vogelhaus.crc2.fillText("Your Final Score:" + " " + score, 260, 350);
             sendScore();
-            //reportScore();  
+            reportScore();
         }
         else {
             Vogelhaus.crc2.fillStyle = "#4C0B5F"; //Endscreen Spieler hat verloren, sprich score < 0
@@ -445,16 +445,22 @@ var Vogelhaus;
             console.log(responseText);
         });
     }
-    function reportScore() {
-        return __awaiter(this, void 0, void 0, function* () {
-            //console.log("");
-            let query = "command=retrieve";
-            let response = yield fetch(url + "?" + query);
-            let responseText = yield response.text();
-            alert(responseText);
-            let orders = document.querySelector("div#report");
-            orders.innerText = responseText;
-        });
-    }
+    window.open("https://kretschmerlea.github.io/EIA2/Vogelhaus/Vogelhaus_Startseite.html", "_self");
+    /*async function reportScore(): Promise<void> {
+        //console.log("");
+        let query: string = "command=retrieve";
+        let response: Response = await fetch(url + "?" + query);
+        let responseText: string = await response.text();
+
+        //let result: ScoreResult[] = JSON.parse(responseText);
+
+        //for (let i: number = 0; i < result.length; i++) {
+            
+        //}
+
+        alert(responseText);
+        let orders: HTMLDivElement = <HTMLDivElement>document.querySelector("div#report");
+        //orders.innerText = responseText;
+    }*/
 })(Vogelhaus || (Vogelhaus = {}));
 //# sourceMappingURL=vogelhaus.js.map

@@ -50,7 +50,7 @@ var Vogelhaus;
                 //     _response.write(key + ":" + url.query[key] + "<br/>");
                 // }
                 if (url.query["command"] == "retrieve") {
-                    let report = yield retrieveOrders();
+                    let report = yield retrieveScores();
                     if (report == "We encountered tecnical problems. Please try again later")
                         _response.write(report);
                     else
@@ -67,7 +67,7 @@ var Vogelhaus;
             _response.end();
         });
     }
-    function retrieveOrders() {
+    function retrieveScores() {
         return __awaiter(this, void 0, void 0, function* () {
             // console.log("Asking DB about Orders ", highscores.find());
             let cursor = yield highscores.find();
