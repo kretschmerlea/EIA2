@@ -39,7 +39,7 @@ namespace Vogelhaus {
         drawMountains(new Vector(0, horizon), 75, 200, "grey", "white");
         drawMountains(new Vector(0, horizon), 50, 150, "grey", "lightgrey");
         drawSnowman(new Vector(100, 625));
-        zeroPointVogelhaus = new Vector(400, 450);
+        zeroPointVogelhaus = new Vogelhaus.Vector(400, 450);
         drawBirdhouse(zeroPointVogelhaus);
         drawTrees(new Vector(700, 600), new Vector(200, 200));
         saveBackground = crc2.getImageData(0, 0, 800, 600);
@@ -409,7 +409,8 @@ namespace Vogelhaus {
             crc2.fillText("Username:" + " " + username, 260, 300); 
             crc2.font = "30px Impact, Charcoal, sans-serif";
             crc2.fillText("Your Final Score:" + " " + score, 260, 350);
-            sendScore();  
+            sendScore();
+            reportScore();  
             
         }
         else {
@@ -513,7 +514,7 @@ namespace Vogelhaus {
         alert(responseText);
         console.log(responseText);
     }
-    async function reportScore(_event: Event): Promise<void> {
+    async function reportScore(): Promise<void> {
         //console.log("");
         let query: string = "command=retrieve";
         let response: Response = await fetch(url + "?" + query);
