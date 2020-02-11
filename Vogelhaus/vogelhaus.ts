@@ -65,7 +65,7 @@ namespace Vogelhaus {
     }
     function drawSun(_postion: Vector): void {
         console.log("Sun", _postion);
-        //Radius innerer und aeußerer Kreis für Gradient Color Stop
+        //Radius innerer und äußerer Kreis für Gradient Color Stop
         let r1: number = 25;
         let r2: number = 75;
         let gradient: CanvasGradient = crc2.createRadialGradient(0, 0, r1, 0, 0, r2);
@@ -283,40 +283,38 @@ namespace Vogelhaus {
         crc2.restore();
     }
     function moveBirds(): void {
-        for (let i: number = 0; i < arrayBirds.length; i++) { //Durchlauf des Vogelarrays 
-            for (let i2: number = 0; i2 < arrayFood.length; i2++) { //Durchlauf des Futterarrays
+        for (let i: number = 0; i < arrayBirds.length; i++) { 
+            for (let i2: number = 0; i2 < arrayFood.length; i2++) { 
                 if (arrayBirds[i].foodnearby(arrayFood[i2])) {  //solange diese Arrays durchlaufen werden, werden diese Methoden aufgerufen
                     arrayBirds[i].changePath(arrayFood[i2]);    
-                    //arrayBirds[i].state = State.FEEDING;
                 }
           
             }
-            arrayBirds[i].move(); //solange i kleiner ist als das Vogelarray werden die move und draw Methode der Vögel ausgeführt
+            arrayBirds[i].move();
             arrayBirds[i].draw();
         }
     }
 
     function moveSnowflakes(): void {
-        for (let i: number = 0; i < arraySnowflakes.length; i++) { //solange i kleiner als SchneeflockenArray 
+        for (let i: number = 0; i < arraySnowflakes.length; i++) { 
             arraySnowflakes[i].move(); //move und draw Methode wird ausgeführt
             arraySnowflakes[i].draw();
         }
     }
     function calculateFoodAction(): void {
-        for (let i: number = 0; i < arrayFood.length; i++) { //solange i < Foodarray
-            //arrayFood[i].move();
+        for (let i: number = 0; i < arrayFood.length; i++) { 
             let food: Food = arrayFood[i];
             
             if ((food.timer == 0 && food.y < 400) || food.lifetime == 0) { //Futter kann nur unterhalb von y=400 landen
                 if (food.lifetime == 0) { //wenn Futter liegt
                     for (let birdCount: number = 0; birdCount < arrayBirds.length; ++birdCount) {
-                        if (arrayBirds[birdCount].state == State.FEEDING || arrayBirds[birdCount].state == State.PICKING) { //Status Vögel: gefüttert und picken
-                            arrayBirds[birdCount].resetVelocity(); //Weiterfliegen
-                            arrayBirds[birdCount].state = State.ALIVE; //Status: Vogel lebt
+                        if (arrayBirds[birdCount].state == State.FEEDING || arrayBirds[birdCount].state == State.PICKING) { 
+                            arrayBirds[birdCount].resetVelocity(); 
+                            arrayBirds[birdCount].state = State.ALIVE; 
                         }
                     }
                 }
-                arrayFood.splice(i, 1); //jedes Mal wenn das Futter geworfen wurde wird ein Futterelement aus dem Array gelöscht
+                arrayFood.splice(i, 1); 
             } 
             else {
                 food.draw(); //Futter wird weiter gezeichnet, sprich ist noch nicht gelandet
@@ -339,8 +337,8 @@ namespace Vogelhaus {
                         //console.log("x: " + bird.x + "y: " + bird.y);
                         if (snowballs[i].ifHit(bird)) { //Vogel getroffen
                             hit = true;
-                            bird.state = State.DEAD; //Vogel tot
-                            score += 10; //Score erhöht sich um 10
+                            bird.state = State.DEAD; 
+                            score += 10; 
                             console.log("score:" + score);
                             arrayBirds.splice(birdNumber, 1); //Anzahl getroffener Vögel
                         }
@@ -352,16 +350,16 @@ namespace Vogelhaus {
                     }
 
                     snowballs.splice(i, 1); //Beim Durchlaufen der Schleife wird jedes Mal ein Schneeball aus dem Array gelöscht 
-                    snowballCount ++; //Anzahl geworfener Schneebälle erhöht sich
+                    snowballCount ++; 
                 }
             }
         }
     }
     function updateCanvas(): void {
         if (snowballCount < 20 && arrayBirds.length > 0) { //solange nicht 20 Schneebälle geworfen wurden und noch mind. 1 Vogel lebt
-            setTimeout(updateCanvas, 1000 / 20); //nach 33,3333ms wird die Funktion updateCanvasaufgerufen
-            crc2.clearRect(0, 0, 800, 600); //Komplette Canvas wird entfernt
-            crc2.putImageData(saveBackground, 0, 0); //gespeichertes Canvas Background worauf dann alle Moveables gezeichnet werden können
+            setTimeout(updateCanvas, 1000 / 20); 
+            crc2.clearRect(0, 0, 800, 600); 
+            crc2.putImageData(saveBackground, 0, 0); 
             moveBirds();
             moveSnowflakes();
             calculateFoodAction();
@@ -373,20 +371,25 @@ namespace Vogelhaus {
             crc2.fillStyle = "white";
             crc2.fillText("Score: ", 660, 25);
 
-            crc2.fillText("" + score, 720, 25);  //Anzahl wie viel Futter noch verfügbar -> höchstens 3
+            crc2.fillText("" + score, 760, 25);  //Anzahl wie viel Futter noch verfügbar -> höchstens 3
             crc2.font = "20px Arial";
             if (foodCount < 3) {
                 crc2.fillStyle = "white";
             } else {
                 crc2.fillStyle = "red";
             }
-
+            
             crc2.fillText("Food left: ", 660, 50);
 
             crc2.fillText("" + Math.abs(foodCount - 3), 760, 50);
+            crc2.fillStyle = "#0f0f0f";     //Snowballfeld
+            crc2.fillRect(0, 0, 180, 35);
+            crc2.fillStyle = "white";
+            crc2.fillText("Snowballs left: ", 10, 25);
+            crc2.fillText("" + Math.abs(snowballCount - 20), 150, 25);
 
         } else {    //wenn 20 Schneebälle geworfen wurden/alle Vögel tot 
-            if (score >= 0) { //Score ist nicht negativ
+            if (score >= 0) { 
                 endScreen(true);
                 
             }
@@ -397,7 +400,7 @@ namespace Vogelhaus {
         }
     }
     let username: string = prompt("Enter your name here!");
-    function endScreen(winner: boolean): void { //Endscreen wenn Spieler "gewonnen" hat, sprich score >= 0
+    function endScreen(winner: boolean): void { //Endscreen wenn Spieler "gewonnen" hat
         if (winner) {
            
             crc2.fillStyle = "#4C0B5F";
@@ -415,7 +418,7 @@ namespace Vogelhaus {
             
         }
         else {
-            crc2.fillStyle = "#4C0B5F"; //Endscreen Spieler hat verloren, sprich score < 0
+            crc2.fillStyle = "#4C0B5F"; //Endscreen Spieler hat verloren
             crc2.fillRect(250, 225, 300, 150);
             crc2.font = "25px Impact, Charcoal, sans-serif";
             crc2.fillStyle = "white";
@@ -449,7 +452,7 @@ namespace Vogelhaus {
         crc2.save();
 
 
-        for (let drawn: number = 0; drawn < nBirds; drawn++) { //es werden 15 Vögel gezeichnet
+        for (let drawn: number = 0; drawn < nBirds; drawn++) { 
             let draw: Birds = new Birds(_size);
             arrayBirds.push(draw);
             /*crc2.save();
